@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import style from "./FormularioAdicionarEntrada.module.css";
 import ModalGlobal from "../ModalGlobal/ModalGlobal";
-import { IoIosAddCircleOutline } from "react-icons/io";
+import { MdOutlineAddCircleOutline } from "react-icons/md";
 
 function FormularioAdicionarEntrada() {
   const [aberto, setAberto] = useState(false);
@@ -49,8 +49,7 @@ function FormularioAdicionarEntrada() {
   return (
     <div>
       <button className={style.botao_modal} onClick={() => setAberto(true)}>
-        <IoIosAddCircleOutline />
-        Adicionar Entrada
+              <MdOutlineAddCircleOutline />Adicionar Entrada 
       </button>
       {aberto && (
         <div className={style.container_total_modal}>

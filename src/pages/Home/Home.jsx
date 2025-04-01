@@ -52,18 +52,18 @@ function Home() {
         <h1 className={style.titulo}>Controle Financeiro</h1>
         <div className={style.botoes_acao}>
           <FormularioAdicionarEntrada />
-          <button>
-            <TbFileExport />
-            Exportar Dados
-          </button>
-          <button>
-            <TbFileImport />
-            Importar Dados
-          </button>
-          <button>
-            <FaRegFileExcel />
-            Gerar Excel
-          </button>
+          {/*<button>*/}
+          {/*  <TbFileExport />*/}
+          {/*  Exportar Dados*/}
+          {/*</button>*/}
+          {/*<button>*/}
+          {/*  <TbFileImport />*/}
+          {/*  Importar Dados*/}
+          {/*</button>*/}
+          {/*<button>*/}
+          {/*  <FaRegFileExcel />*/}
+          {/*  Gerar Excel*/}
+          {/*</button>*/}
         </div>
       </div>
 
