@@ -1,0 +1,31 @@
+.container_principal {
+  padding: 30px 100px;
+}
+
+.container_titulo_acoes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+.titulo {
+  font-size: 1.6rem;
+  color: #006dcd;
+}
+
+.botoes_acao {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.container_cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+}
