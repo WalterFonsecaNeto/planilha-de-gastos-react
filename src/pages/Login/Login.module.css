@@ -34,3 +34,13 @@
 .button:hover {
   background-color: #0056b3;
 }
+
+
+.link{
+  color: #333;
+  text-decoration: none;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  text-align: center;
+}

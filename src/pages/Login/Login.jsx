@@ -1,4 +1,4 @@
-import style from "./Login.module.css"
+import style from "./Login.module.css";
 import React, { useState } from "react";
 import {
   auth,
@@ -30,6 +30,9 @@ function Login() {
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) {
+        console.log(user.uid)
+        localStorage.setItem("userId", user.uid);
+
         alert("Login realizado com sucesso!");
         navigate("/home");
       } else {
@@ -60,6 +63,10 @@ function Login() {
       <button onClick={handleLogin} className={style.button}>
         Entrar
       </button>
+
+      <p className={style.link}>
+        Ainda não possui uma conta? <a href="/cadastro">Crie uma agora!</a>
+      </p>
     </div>
   );
 }

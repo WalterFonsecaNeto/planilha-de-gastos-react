@@ -4,16 +4,18 @@ import { FiArrowUpRight, FiArrowDownRight } from "react-icons/fi";
 import { LuWallet } from "react-icons/lu";
 import { TbFileExport, TbFileImport } from "react-icons/tb";
 import { FaRegFileExcel } from "react-icons/fa";
-
 import CardValores from "../../components/CardValores/CardValores";
 import FormularioAdicionarEntrada from "../../components/FormularioAdicionarEntrada/FormularioAdicionarEntrada";
 import TabelaFinanceira from "../../components/TabelaFinanceira/TabelaFinanceira";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [entradas, setEntradas] = useState([]);
   const [receitaTotal, setReceitaTotal] = useState(0);
   const [gastosTotal, setGastosTotal] = useState(0);
   const [saldoRestante, setSaldoRestante] = useState(0);
+  const navigate = useNavigate();
+  
 
   useEffect(() => {
     buscarDadosLocalStorage();
@@ -46,12 +48,21 @@ function Home() {
     setSaldoRestante(totalReceita - totalGastos);
   }
 
+
+
+  const handleLogout = () => {
+    localStorage.removeItem("userId"); // Remove o ID do usuário
+    navigate("/"); // Redireciona para login
+  };
+  
+
   return (
     <div className={style.container_principal}>
       <div className={style.container_titulo_acoes}>
         <h1 className={style.titulo}>Controle Financeiro</h1>
         <div className={style.botoes_acao}>
           <FormularioAdicionarEntrada />
+          <button onClick={handleLogout}>Sair</button>
           {/*<button>*/}
           {/*  <TbFileExport />*/}
           {/*  Exportar Dados*/}
