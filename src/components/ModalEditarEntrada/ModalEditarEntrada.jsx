@@ -1,81 +1,62 @@
 import { useState, useEffect } from "react";
-import style from "./FormularioAdicionarEntrada.module.css";
+import style from "./ModalEditarEntrada.module.css";
 import ModalGlobal from "../ModalGlobal/ModalGlobal";
-import { MdOutlineAddCircleOutline } from "react-icons/md";
-import { addDoc, collection } from "../../db/firebaseConfig";
-import { db } from "../../db/firebaseConfig"; // Importe o db explicitamente
+import { FiEdit } from "react-icons/fi";
 
-function FormularioAdicionarEntrada({ userId }) {
+function ModalEditarEntrada({ entrada, onSave, onClose }) {
   const [aberto, setAberto] = useState(false);
-  const [entradaFormulario, setEntradaFormulario] = useState({
-    valor: null,
+  const [dadosEdicao, setDadosEdicao] = useState({
+    valor: "",
     data: "",
     categoria: "",
     tipo: "",
-    descricao: "",
+    descricao: ""
   });
 
-  function SetValoreEntrada(event) {
-    const { name, value } = event.target;
-    setEntradaFormulario((prevEntrada) => ({
-      ...prevEntrada,
-      [name]: value,
-    }));
-  }
-
-  async function SalvarEntrada() {
-    if (
-      !entradaFormulario.valor ||
-      !entradaFormulario.data ||
-      !entradaFormulario.categoria ||
-      !entradaFormulario.tipo ||
-      !entradaFormulario.descricao
-    ) {
-      alert("Preencha todos os campos!");
-      return;
-    }
-
-    try {
-      await addDoc(collection(db, "entradas"), {
-        ...entradaFormulario,
-        valor: Number(entradaFormulario.valor),
-        userId,
-        createdAt: new Date(),
-      });
-
-      // Fecha o modal e limpa o formulário
-      setAberto(false);
-    } catch (error) {
-      console.error("Erro ao salvar entrada:", error);
-      alert("Ocorreu um erro ao salvar a entrada");
-    }
-  }
-
-  // Limpa os campos quando o modal é fechado
   useEffect(() => {
-    if (!aberto) {
-      setEntradaFormulario({
-        valor: 0,
-        data: "",
-        categoria: "",
-        tipo: "",
-        descricao: "",
+    if (entrada) {
+      setDadosEdicao({
+        valor: entrada.valor,
+        data: entrada.data,
+        categoria: entrada.categoria,
+        tipo: entrada.tipo,
+        descricao: entrada.descricao
       });
     }
-  }, [aberto]);
+  }, [entrada]);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setDadosEdicao(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = () => {
+    onSave({
+      ...dadosEdicao,
+      valor: Number(dadosEdicao.valor)
+    });
+    setAberto(false);
+  };
 
   return (
     <div>
-      <button className={style.botao_modal} onClick={() => setAberto(true)}>
-        <MdOutlineAddCircleOutline />
-        Adicionar Entrada
+      <button 
+        className={style.botao_editar}
+        onClick={() => setAberto(true)}
+      >
+        <FiEdit />
       </button>
+      
       {aberto && (
         <div className={style.container_total_modal}>
           <ModalGlobal
             aberto={aberto}
             setAberto={setAberto}
-            titulo="Adicionar Entrada"
+            titulo="Editar Entrada"
+            onClose={onClose}
           >
             <div className={style.container_formulario}>
               <form className={style.formulario}>
@@ -84,20 +65,18 @@ function FormularioAdicionarEntrada({ userId }) {
                     <label htmlFor="valor">Valor</label>
                     <input
                       type="number"
-                      placeholder="Valor"
                       name="valor"
-                      value={entradaFormulario.valor}
-                      onChange={SetValoreEntrada}
+                      value={dadosEdicao.valor}
+                      onChange={handleChange}
                     />
                   </div>
                   <div className={style.container_campos_formulario}>
                     <label htmlFor="data">Data</label>
                     <input
                       type="date"
-                      placeholder="Data"
                       name="data"
-                      value={entradaFormulario.data}
-                      onChange={SetValoreEntrada}
+                      value={dadosEdicao.data}
+                      onChange={handleChange}
                     />
                   </div>
                 </div>
@@ -107,21 +86,18 @@ function FormularioAdicionarEntrada({ userId }) {
                     <label htmlFor="categoria">Categoria</label>
                     <input
                       type="text"
-                      placeholder="Categoria"
                       name="categoria"
-                      value={entradaFormulario.categoria}
-                      onChange={SetValoreEntrada}
+                      value={dadosEdicao.categoria}
+                      onChange={handleChange}
                     />
                   </div>
-
                   <div className={style.container_campos_formulario}>
                     <label htmlFor="tipo">Tipo</label>
                     <select
                       name="tipo"
-                      value={entradaFormulario.tipo}
-                      onChange={SetValoreEntrada}
+                      value={dadosEdicao.tipo}
+                      onChange={handleChange}
                     >
-                      <option value="">Selecione um tipo</option>
                       <option value="Despesa">Despesa</option>
                       <option value="Receita">Receita</option>
                     </select>
@@ -131,10 +107,9 @@ function FormularioAdicionarEntrada({ userId }) {
                 <div className={style.container_campos_formulario}>
                   <label htmlFor="descricao">Descrição</label>
                   <textarea
-                    placeholder="Descrição"
                     name="descricao"
-                    value={entradaFormulario.descricao}
-                    onChange={SetValoreEntrada}
+                    value={dadosEdicao.descricao}
+                    onChange={handleChange}
                   />
                 </div>
 
@@ -148,10 +123,10 @@ function FormularioAdicionarEntrada({ userId }) {
                   </button>
                   <button
                     type="button"
-                    onClick={SalvarEntrada}
-                    className={style.botao_adicionar}
+                    onClick={handleSubmit}
+                    className={style.botao_salvar}
                   >
-                    Adicionar
+                    Salvar Alterações
                   </button>
                 </div>
               </form>
@@ -163,4 +138,4 @@ function FormularioAdicionarEntrada({ userId }) {
   );
 }
 
-export default FormularioAdicionarEntrada;
+export default ModalEditarEntrada;

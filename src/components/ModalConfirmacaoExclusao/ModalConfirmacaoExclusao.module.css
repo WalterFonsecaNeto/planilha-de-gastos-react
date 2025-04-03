@@ -1,0 +1,39 @@
+.container_total_modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.container_conteudo {
+    padding: 20px;
+    text-align: center;
+}
+
+.botao_excluir {
+    background: none;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
+
+.botao_confirmar {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.botao_confirmar:hover {
+    background-color: #c82333;
+}
