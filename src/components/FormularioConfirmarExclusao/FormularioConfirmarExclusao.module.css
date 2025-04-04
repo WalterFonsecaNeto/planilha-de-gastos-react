@@ -1,0 +1,51 @@
+.container_conteudo {
+  width: 300px;
+  padding: 20px;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+
+.container_conteudo h4  {
+  margin: 0;
+}
+.entrada_selecionada {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #006DCD;
+}
+.container_botoes {
+  display: flex;
+  gap: 30px;
+}
+
+.botao_cancelar {
+  padding: 12px 25px;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  color: #495057;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.botao_cancelar:hover {
+  background-color: #e9ecef;
+}
+
+.botao_confirmar {
+  padding: 12px 25px;
+  background-color: #dc3545;
+  border: 1px solid #dc3545;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.botao_confirmar:hover {
+  background-color: #c82333;
+}

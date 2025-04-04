@@ -4,7 +4,8 @@ import { FiEdit, FiTrash2 } from "react-icons/fi";
 import style from "./TabelaFinanceira.module.css";
 import { deleteDoc, doc, updateDoc } from "../../db/firebaseConfig";
 import { db } from "../../db/firebaseConfig";
-import ModalGlobal from "../ModalGlobal/ModalGlobal";
+import FormularioEditarEntrada from "../FormularioEditarEntrada/FormularioEditarEntrada";
+import FormularioConfirmarExclusao from "../FormularioConfirmarExclusao/FormularioConfirmarExclusao";
 
 function TabelaFinanceira({ entradas, userId }) {
   // Estados para controle da tabela
@@ -19,7 +20,14 @@ function TabelaFinanceira({ entradas, userId }) {
   // Estados para os modais
   const [modalExclusaoAberto, setModalExclusaoAberto] = useState(false);
   const [modalEdicaoAberto, setModalEdicaoAberto] = useState(false);
-  const [entradaSelecionada, setEntradaSelecionada] = useState(null);
+  const [entradaSelecionada, setEntradaSelecionada] = useState({
+    id: "",
+    tipo: "",
+    valor: "",
+    data: "",
+    categoria: "",
+    descricao: "",
+  });
   const [dadosEdicao, setDadosEdicao] = useState({
     valor: "",
     data: "",
@@ -332,120 +340,21 @@ function TabelaFinanceira({ entradas, userId }) {
       </div>
 
       {/* Modal de Confirmação de Exclusão */}
-      {modalExclusaoAberto && (
-        <div className={style.container_total_modal}>
-          <ModalGlobal
-            aberto={modalExclusaoAberto}
-            setAberto={setModalExclusaoAberto}
-            titulo="Confirmar Exclusão"
-          >
-            <div className={style.container_conteudo}>
-              <p>Tem certeza que deseja excluir esta entrada?</p>
-              <div className={style.container_botoes}>
-                <button
-                  type="button"
-                  className={style.botao_cancelar}
-                  onClick={() => setModalExclusaoAberto(false)}
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="button"
-                  onClick={handleConfirmarExclusao}
-                  className={style.botao_confirmar}
-                >
-                  Confirmar Exclusão
-                </button>
-              </div>
-            </div>
-          </ModalGlobal>
-        </div>
-      )}
+      <FormularioConfirmarExclusao
+        aberto={modalExclusaoAberto}
+        setAberto={setModalExclusaoAberto}
+        entradaSelecionada={entradaSelecionada}
+        handleConfirmarExclusao={handleConfirmarExclusao}
+      />
 
       {/* Modal de Edição */}
-      {modalEdicaoAberto && (
-        <div className={style.container_total_modal}>
-          <ModalGlobal
-            aberto={modalEdicaoAberto}
-            setAberto={setModalEdicaoAberto}
-            titulo="Editar Entrada"
-          >
-            <div className={style.container_formulario}>
-              <form className={style.formulario}>
-                <div className={style.container_linha}>
-                  <div className={style.container_campos_formulario}>
-                    <label htmlFor="valor">Valor</label>
-                    <input
-                      type="number"
-                      name="valor"
-                      value={dadosEdicao.valor}
-                      onChange={handleChangeEdicao}
-                    />
-                  </div>
-                  <div className={style.container_campos_formulario}>
-                    <label htmlFor="data">Data</label>
-                    <input
-                      type="date"
-                      name="data"
-                      value={dadosEdicao.data}
-                      onChange={handleChangeEdicao}
-                    />
-                  </div>
-                </div>
-
-                <div className={style.container_linha}>
-                  <div className={style.container_campos_formulario}>
-                    <label htmlFor="categoria">Categoria</label>
-                    <input
-                      type="text"
-                      name="categoria"
-                      value={dadosEdicao.categoria}
-                      onChange={handleChangeEdicao}
-                    />
-                  </div>
-                  <div className={style.container_campos_formulario}>
-                    <label htmlFor="tipo">Tipo</label>
-                    <select
-                      name="tipo"
-                      value={dadosEdicao.tipo}
-                      onChange={handleChangeEdicao}
-                    >
-                      <option value="Despesa">Despesa</option>
-                      <option value="Receita">Receita</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className={style.container_campos_formulario}>
-                  <label htmlFor="descricao">Descrição</label>
-                  <textarea
-                    name="descricao"
-                    value={dadosEdicao.descricao}
-                    onChange={handleChangeEdicao}
-                  />
-                </div>
-
-                <div className={style.container_botoes}>
-                  <button
-                    type="button"
-                    className={style.botao_cancelar}
-                    onClick={() => setModalEdicaoAberto(false)}
-                  >
-                    Cancelar
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleSalvarEdicao}
-                    className={style.botao_salvar}
-                  >
-                    Salvar Alterações
-                  </button>
-                </div>
-              </form>
-            </div>
-          </ModalGlobal>
-        </div>
-      )}
+      <FormularioEditarEntrada
+        aberto={modalEdicaoAberto}
+        setAberto={setModalEdicaoAberto}
+        dadosEdicao={dadosEdicao}
+        handleChangeEdicao={handleChangeEdicao}
+        handleSalvarEdicao={handleSalvarEdicao}
+      />
     </>
   );
 }

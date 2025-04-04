@@ -37,46 +37,42 @@
 .formulario {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-}
-
-.container_campos_formulario {
+    gap: 20px;
+  }
+  
+  .container_linha {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .container_campos_formulario {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    gap: 4px;
-    & label
-
-{
-    font-size: 0.8rem;
-    font-weight: 500;
-}
-
-& input {
-    padding: 8px;
-    border-radius: 5px;
-    border: #6c6c6c solid 1px;
-    outline: none;
-    font-size: 0.8rem;
-}
-
-& select {
-    padding: 8px;
-    border-radius: 5px;
-    border: #6c6c6c solid 1px;
-    outline: none;
-    font-size: 0.8rem;
-}
-
-& textarea {
-    padding: 8px;
-    border-radius: 5px;
-    border: #6c6c6c solid 1px;
-    outline: none;
-    font-size: 0.8rem;
-}
-
-}
+    gap: 5px;
+    flex: 1;
+  }
+  
+  .container_campos_formulario label {
+    font-size: 0.9rem;
+    color: #495057;
+  }
+  
+  .container_campos_formulario input,
+  .container_campos_formulario select {
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .container_campos_formulario textarea {
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1rem;
+    min-height: 80px;
+    resize: vertical;
+  }
 
 .container_linha {
     display: flex;

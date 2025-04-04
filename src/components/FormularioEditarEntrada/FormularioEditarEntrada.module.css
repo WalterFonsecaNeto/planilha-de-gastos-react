@@ -1,0 +1,87 @@
+.container_formulario {
+    
+    width: 500px;
+  }
+  
+  .formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .container_linha {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .container_campos_formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+  }
+  
+  .container_campos_formulario label {
+    font-size: 0.9rem;
+    color: #495057;
+  }
+  
+  .container_campos_formulario input,
+  .container_campos_formulario select {
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .container_campos_formulario textarea {
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1rem;
+    min-height: 80px;
+    resize: vertical;
+  }
+ 
+.container_botoes {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-top: 30px;
+  font-size: 14px;
+}
+
+.botao_cancelar {
+  font-size: 14px;
+  width: 50%;
+  padding: 10px 0;
+  border-radius: 8px;
+  border: none;
+  background-color: #ff4136;
+  color: white;
+  transition: background-color 0.2s ease-in-out;
+  &:hover
+
+{
+  background-color: #ff0d00;
+  transition: background-color 0.2s ease-in-out;
+}
+
+}
+
+.botao_salvar {
+  width: 50%;
+  padding: 10px 0;
+  border-radius: 8px;
+  border: none;
+  background-color: #31c657;
+  color: white;
+  transition: background-color 0.2s ease-in-out;
+  font-size: 14px;
+  &:hover
+
+{
+  background-color: #00ba2f;
+  transition: background-color 0.2s ease-in-out;
+}
+}
