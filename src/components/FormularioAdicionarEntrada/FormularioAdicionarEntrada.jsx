@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import style from "./FormularioAdicionarEntrada.module.css";
 import ModalGlobal from "../ModalGlobal/ModalGlobal";
 import { MdOutlineAddCircleOutline } from "react-icons/md";
+import { addDoc, collection } from "../../db/firebaseConfig";
+import { db } from "../../db/firebaseConfig"; // Importe o db explicitamente
 
-function FormularioAdicionarEntrada() {
+function FormularioAdicionarEntrada({ userId }) {
   const [aberto, setAberto] = useState(false);
   const [entradaFormulario, setEntradaFormulario] = useState({
     valor: null,
@@ -21,16 +23,32 @@ function FormularioAdicionarEntrada() {
     }));
   }
 
-  function SalvarEntrada() {
-    if (!entradaFormulario.valor ||!entradaFormulario.data ||!entradaFormulario.descricao) {
+  async function SalvarEntrada() {
+    if (
+      !entradaFormulario.valor ||
+      !entradaFormulario.data ||
+      !entradaFormulario.categoria ||
+      !entradaFormulario.tipo ||
+      !entradaFormulario.descricao
+    ) {
       alert("Preencha todos os campos!");
       return;
     }
-    console.log(entradaFormulario)
-    const dados = JSON.parse(localStorage.getItem("dados")) || [];
-    dados.push(entradaFormulario);
-    localStorage.setItem("dados", JSON.stringify(dados));
 
+    try {
+      await addDoc(collection(db, "entradas"), {
+        ...entradaFormulario,
+        valor: Number(entradaFormulario.valor),
+        userId,
+        createdAt: new Date(),
+      });
+
+      // Fecha o modal e limpa o formulário
+      setAberto(false);
+    } catch (error) {
+      console.error("Erro ao salvar entrada:", error);
+      alert("Ocorreu um erro ao salvar a entrada");
+    }
   }
 
   // Limpa os campos quando o modal é fechado
@@ -49,7 +67,8 @@ function FormularioAdicionarEntrada() {
   return (
     <div>
       <button className={style.botao_modal} onClick={() => setAberto(true)}>
-              <MdOutlineAddCircleOutline />Adicionar Entrada 
+        <MdOutlineAddCircleOutline />
+        Adicionar Entrada
       </button>
       {aberto && (
         <div className={style.container_total_modal}>
@@ -127,7 +146,11 @@ function FormularioAdicionarEntrada() {
                   >
                     Cancelar
                   </button>
-                  <button onClick={SalvarEntrada} className={style.botao_adicionar}>
+                  <button
+                    type="button"
+                    onClick={SalvarEntrada}
+                    className={style.botao_adicionar}
+                  >
                     Adicionar
                   </button>
                 </div>

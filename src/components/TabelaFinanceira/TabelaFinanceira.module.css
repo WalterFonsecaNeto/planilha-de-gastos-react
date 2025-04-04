@@ -1,210 +1,242 @@
 /* components/TabelaFinanceira/TabelaFinanceira.module.css */
 .container_tabela {
-    width: 100%;
-    max-width: 100%;
-    overflow: hidden;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    margin-top: 40px;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 40px;
 }
 
 .wrapper_tabela {
-    max-height: 600px;
-    overflow-y: auto;
+  max-height: 600px;
+  overflow-y: auto;
 }
 
 .tabela {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    table-layout: fixed; /* Adicionado para forçar o uso das larguras definidas */
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  table-layout: fixed;
 }
 
-    .tabela thead {
-        background-color: #f8f9fa;
-        position: sticky;
-        top: 0;
-    }
+.tabela thead {
+  background-color: #f8f9fa;
+  position: sticky;
+  top: 0;
+}
 
-    .tabela th {
-        padding: 12px 15px;
-        text-align: left;
-        font-weight: 600;
-        color: #495057;
-        border-bottom: 2px solid #dee2e6;
-    }
+.tabela th {
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 2px solid #dee2e6;
+}
 
-    .tabela td {
-        padding: 12px 15px;
-        border-bottom: 1px solid #dee2e6;
-        color: #212529;
-        white-space: nowrap; /* Impede que o texto quebre em várias linhas */
-        overflow: hidden; /* Esconde o conteúdo que ultrapassar */
-        text-overflow: ellipsis; /* Adiciona "..." se o texto for muito longo */
-    }
+.tabela td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #dee2e6;
+  color: #212529;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Adicione isso ao seu arquivo TabelaFinanceira.module.css */
 
-        /* Defina larguras fixas para cada coluna */
-        .tabela th:nth-child(1),
-        .tabela td:nth-child(1) {
-            width: 30%; /* NOME */
-        }
+/* Ajuste para a quinta coluna (Ações) */
 
-        .tabela th:nth-child(2),
-        .tabela td:nth-child(2) {
-            width: 20%; /* TIPO */
-        }
+/* Redistribua as larguras das outras colunas */
+.tabela th:nth-child(1),
+.tabela td:nth-child(1) {
+  width: 25%; /* Reduzido de 30% */
+}
 
-        .tabela th:nth-child(3),
-        .tabela td:nth-child(3) {
-            width: 25%; /* DATA */
-        }
+.tabela th:nth-child(2),
+.tabela td:nth-child(2) {
+  width: 15%; /* Reduzido de 20% */
+}
 
-        .tabela th:nth-child(4),
-        .tabela td:nth-child(4) {
-            width: 25%; /* VALOR */
-        }
+.tabela th:nth-child(3),
+.tabela td:nth-child(3) {
+  width: 20%; /* Reduzido de 25% */
+}
 
-    .tabela tr:last-child td {
-        border-bottom: none;
-    }
+.tabela th:nth-child(4),
+.tabela td:nth-child(4) {
+  width: 25%; /* Reduzido de 25% */
+}
+.tabela th:nth-child(5),
+.tabela td:nth-child(5) {
+  width: 15%;
+}
+.tabela tr:last-child td {
+  border-bottom: none;
+}
 
-    .tabela tr:hover {
-        background-color: #f8f9fa;
-    }
+.tabela tr:hover {
+  background-color: #f8f9fa;
+}
 
 .cabecalho_ordenavel {
-    cursor: pointer;
-    user-select: none;
-    position: relative;
-    padding-right: 20px !important;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  padding-right: 20px !important;
 }
 
-    .cabecalho_ordenavel:hover {
-        background-color: #e9ecef;
-    }
+.cabecalho_ordenavel:hover {
+  background-color: #e9ecef;
+}
 
 .cabecalho_filtro_tipo {
-    position: relative;
+  position: relative;
 }
 
 .dropdown_tipo {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
 }
 
-    .dropdown_tipo select {
-        padding: 5px;
-        border: 1px solid #ced4da;
-        border-radius: 4px;
-        background-color: white;
-        cursor: pointer;
-        margin-top: 5px;
-        font-size: 14px;
-        width: 60%;
-        outline: none;
-    }
-
-
+.dropdown_tipo select {
+  padding: 5px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  margin-top: 5px;
+  font-size: 14px;
+  width: 60%;
+  outline: none;
+}
 
 .valor_positivo {
-    color: #28a745;
-    font-weight: 600;
+  color: #28a745;
+  font-weight: 600;
 }
 
 .valor_negativo {
-    color: #dc3545;
-    font-weight: 600;
+  color: #dc3545;
+  font-weight: 600;
 }
 
-/* Restante do seu CSS permanece igual */
-
-.botao_acoes {
-    background: none;
-    border: 1px solid #dc3545;
-    cursor: pointer;
-    font-size: 0.9rem;
-    color: #dc3545;
-    padding: 5px 10px;
-    border-radius: 4px;
-}
-
-    .botao_acoes:hover {
-        background-color: #dc3545;
-        color: white;
-    }
 
 .paginacao {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    background-color: #f8f9fa;
-    border-top: 1px solid #dee2e6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #dee2e6;
 }
 
-    .paginacao button {
-        margin: 0 5px;
-        padding: 5px 10px;
-        border: 1px solid #dee2e6;
-        background: white;
-        border-radius: 4px;
-        cursor: pointer;
-    }
+.paginacao button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #dee2e6;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
-        .paginacao button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+.paginacao button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
-        .paginacao button:hover:not(:disabled) {
-            background: #e9ecef;
-        }
+.paginacao button:hover:not(:disabled) {
+  background: #e9ecef;
+}
 
 .pagina_ativa {
-    background-color: #007bff !important;
-    color: white;
-    border-color: #007bff !important;
+  background-color: #007bff !important;
+  color: white;
+  border-color: #007bff !important;
 }
 
 .sem_resultados {
-    padding: 20px;
-    text-align: center;
-    background-color: #f8f9fa;
-    border-radius: 0 0 10px 10px;
-    color: #6c757d;
+  padding: 20px;
+  text-align: center;
+  background-color: #f8f9fa;
+  border-radius: 0 0 10px 10px;
+  color: #6c757d;
 }
 
 .filtro_categoria {
-    margin: 20px 0;
+  margin: 20px 0;
 }
 
-    .filtro_categoria input {
-        padding: 8px 12px;
-        border: 1px solid #ced4da;
-        border-radius: 4px;
-        width: 100%;
-        max-width: 400px;
-    }
+.filtro_categoria input {
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 400px;
+}
 
 @media (max-width: 768px) {
-    .tabela {
-        font-size: 0.9rem;
-    }
+  .tabela {
+    font-size: 0.9rem;
+  }
 
-        .tabela th,
-        .tabela td {
-            padding: 8px 10px;
-        }
+  .tabela th,
+  .tabela td {
+    padding: 8px 10px;
+  }
 
-    .dropdown_tipo select {
-        font-size: 12px;
-        padding: 3px;
-    }
+  .dropdown_tipo select {
+    font-size: 12px;
+    padding: 3px;
+  }
 
-    .paginacao {
-        flex-direction: column;
-        gap: 10px;
-    }
+  .paginacao {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+
+
+/* Estilos para o container dos botões */
+.container_acoes {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.botao_excluir {
+background: none;
+border: none;
+color: #dc3545;
+cursor: pointer;
+font-size: 1.2rem;
+}
+
+
+.botao_editar {
+background: none;
+border: none;
+color: #007bff;
+cursor: pointer;
+font-size: 1.2rem;
+}
+
+
+.botao_expandir {
+  background: none;
+  border: none;
+  color: #2ecc71;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.linha_descricao {
+background-color: #f8f9fa;
+}
+
+.conteudo_descricao { 
+background-color: #f8f9fa;
+font-size: 0.9rem;
+color: #495057;
 }

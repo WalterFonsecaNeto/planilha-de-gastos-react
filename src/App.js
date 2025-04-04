@@ -1,8 +1,8 @@
 import "./App.css";
-import Home from "./pages/Home/Home";
+import Rotas from "./routes/Rotas";
 
 function App() {
-  return <Home />;
+  return <Rotas />;
 }
 
 export default App;
