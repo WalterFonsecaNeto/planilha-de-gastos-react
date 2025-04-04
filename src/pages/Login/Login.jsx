@@ -26,7 +26,7 @@ function Login() {
       const user = userCredential.user;
 
       // Verifica se o usuário existe na coleção "usuario"
-      const q = query(collection(db, "usuario"), where("uid", "==", user.uid));
+      const q = query(collection(db, "usuarios"), where("uid", "==", user.uid));
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) {

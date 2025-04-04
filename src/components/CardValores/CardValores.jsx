@@ -21,7 +21,7 @@ function CardValores({ titulo, valor, icone }) {
         <h3 className={style.titulo}>{titulo}</h3>
         <div className={style.icon}>{icone}</div>
       </div>
-      <h3 className={style.valor}>R${valor}</h3>
+      <h3 className={style.valor}>R${valor.toFixed(2)}</h3>
     </div>
   );
 }
