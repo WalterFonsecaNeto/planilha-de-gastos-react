@@ -82,7 +82,7 @@ function Home() {
         <h1 className={style.titulo}>Controle Financeiro</h1>
         <div className={style.botoes_acao}>
           <FormularioAdicionarEntrada userId={userId} />
-          <button onClick={handleLogout}>Sair</button>
+          <button onClick={handleLogout} className={style.botao_sair}>Sair</button>
         </div>
       </div>
 
