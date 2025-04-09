@@ -54,6 +54,14 @@ import {
       return null;
     }
   }
+
+  async function listarOutrosUsuariosAsync(uidAtual) {
+    const snapshot = await getDocs(collection(db, 'usuarios'));
+    const todosUsuarios = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const outrosUsuarios = todosUsuarios.filter(usuario => usuario.id !== uidAtual);
+    return outrosUsuarios;
+  }
+  
   
   const usuario = {
     criarUsuarioAsync,
@@ -61,6 +69,7 @@ import {
     buscarUsuariosAsync,
     buscarUsuarioPorEmailAsync,
     buscarUsuarioPorUidAsync,
+    listarOutrosUsuariosAsync,
   };
   
   export default usuario;
