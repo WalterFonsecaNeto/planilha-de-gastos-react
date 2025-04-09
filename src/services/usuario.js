@@ -55,11 +55,10 @@ import {
     }
   }
 
-  async function listarOutrosUsuariosAsync(uidAtual) {
+  async function listarTodosUsuariosAsync() {
     const snapshot = await getDocs(collection(db, 'usuarios'));
     const todosUsuarios = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    const outrosUsuarios = todosUsuarios.filter(usuario => usuario.id !== uidAtual);
-    return outrosUsuarios;
+    return todosUsuarios;
   }
 
   async function editarUsuarioAsync(uid, dadosAtualizados) {
@@ -75,7 +74,7 @@ import {
     buscarUsuariosAsync,
     buscarUsuarioPorEmailAsync,
     buscarUsuarioPorUidAsync,
-    listarOutrosUsuariosAsync,
+    listarTodosUsuariosAsync,
     editarUsuarioAsync,
   };
   

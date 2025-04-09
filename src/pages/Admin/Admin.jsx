@@ -12,8 +12,7 @@ function Admin() {
 
   async function carregarUsuarios() {
     try {
-      const usuarioIdAtual = localStorage.getItem("userId");
-      const listaUsuario = await usuario.listarOutrosUsuariosAsync(usuarioIdAtual);
+      const listaUsuario = await usuario.listarTodosUsuariosAsync();
       setUsuarios(listaUsuario);
     } catch (error) {
       console.error("Erro ao carregar usuários:", error);
