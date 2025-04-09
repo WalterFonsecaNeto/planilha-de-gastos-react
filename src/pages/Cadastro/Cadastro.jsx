@@ -2,6 +2,7 @@ import style from "./Cadastro.module.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import usuario from "../../services/usuario";
+import AlertaGlobal from "../../components/AlertaGlobal/AlertaGlobal";
 
 function Cadastro() {
   const [nome, setNome] = useState("");
@@ -11,19 +12,37 @@ function Cadastro() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const [mostrarAlerta, setMostrarAlerta] = useState(false);
+  const [mensagemAlerta, setMensagemAlerta] = useState("");
+  const [tipoAlerta, setTipoAlerta] = useState("");
+
+  function exibirAlerta(mensagem, tipo) {
+    setMensagemAlerta(mensagem);
+    setTipoAlerta(tipo);
+    setMostrarAlerta(true);
+
+    setTimeout(() => {
+      setMostrarAlerta(false);
+    }, 1500);
+  }
+
   const handleRegister = async (e) => {
     e.preventDefault();
 
     if (senha !== confirmarSenha) {
-      alert("As senhas não coincidem!");
+      exibirAlerta("As senhas não coincidem!", "danger");
       return;
     }
+
     setLoading(true);
 
     try {
       await usuario.criarUsuarioAsync(email, senha, nome);
-      alert("Usuário cadastrado com sucesso!");
-      navigate("/login");
+      exibirAlerta("Usuário cadastrado com sucesso!", "success");
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
     } catch (error) {
       let errorMessage = "Erro ao cadastrar: ";
       switch (error.code) {
@@ -39,7 +58,7 @@ function Cadastro() {
         default:
           errorMessage += error.message;
       }
-      alert(errorMessage);
+      exibirAlerta(errorMessage, "danger");
     } finally {
       setLoading(false);
     }
@@ -91,6 +110,13 @@ function Cadastro() {
           Já tem uma conta? <a href="/login">Faça login</a>
         </p>
       </div>
+
+      <AlertaGlobal
+        tipo={tipoAlerta}
+        mensagem={mensagemAlerta}
+        visivel={mostrarAlerta}
+        aoFechar={() => setMostrarAlerta(false)}
+      />
     </div>
   );
 }

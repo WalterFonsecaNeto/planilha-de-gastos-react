@@ -1,4 +1,4 @@
-import style from "./Login.module.css";
+import style from "./Login.module.css"; 
 import React, { useState } from "react";
 import usuario from "../../services/usuario";
 import { useNavigate } from "react-router-dom";
@@ -26,6 +26,11 @@ function Login() {
   }
 
   async function login() {
+    if (!email || !senha) {
+      exibirAlerta("Preencha todos os campos para continuar.", "danger");
+      return;
+    }
+    
     try {
       setDesabilitarBotao(true);
 
@@ -51,10 +56,27 @@ function Login() {
         exibirAlerta("Usuário não encontrado no banco de dados.", "danger");
       }
     } catch (error) {
-      exibirAlerta(`Erro ao fazer login: ${error.message}`, "danger");
+      let errorMessage = "Erro ao fazer login: ";
+      switch (error.code) {
+        case "auth/invalid-email":
+          errorMessage += "Email ou senha inválidos.";
+          break;
+        case "auth/user-disabled":
+          errorMessage += "Usuário desativado.";
+          break;
+        case "auth/user-not-found":
+          errorMessage += "Usuário não encontrado.";
+          break;
+        case "auth/invalid-credential":
+          errorMessage += "Email ou senha inválidos.";
+          break;
+        default:
+          errorMessage += error.message;
+      }
+    
+      exibirAlerta(errorMessage, "danger");
     }
   }
-
 
   return (
     <div className={style.container_total}>
