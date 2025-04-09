@@ -1,0 +1,46 @@
+/* Estilização do sidebar */
+.sidebar_conteudo {
+  transition: transform 0.5s ease;
+  background-color: #e8e8e8;
+  position: fixed;
+
+  top: 61px;
+  left: 0;
+
+  width: 15rem;
+  height: 100vh;
+
+  overflow: hidden;
+
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+}
+
+/* Estilização do corpo onde aparece os sidbar itens */
+.sidebar_corpo {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  margin-left: 10%;
+}
+
+/* Estilização do conteúdo da página */
+.pagina_conteudo {
+  margin-left: 16.5rem; /* Espaço para a barra lateral */
+  margin-top: 10vh; /* Espaço para o Topbar */
+  transition: margin-left 0.5s ease;
+}
+
+/* Estilizações para a sidebar esconder  */
+.sidebar_hidden {
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+}
+.closed .pagina_conteudo {
+  margin-left: 0;
+  transition: margin-left 0.5s ease;
+}
+

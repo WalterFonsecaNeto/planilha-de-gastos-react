@@ -1,0 +1,25 @@
+.sidebar_item {
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  color: #000000;
+
+  & svg {
+    font-size: 22px;
+  }
+
+  & .texto_link {
+    font-size: 16px;
+  }
+
+  &:hover {
+    color: #006DCC;
+  }
+}
+
+.link_ativo {
+  color: #006DCC;
+}
+
