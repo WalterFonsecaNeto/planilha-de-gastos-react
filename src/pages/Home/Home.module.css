@@ -11,3 +11,19 @@
   color: #006dcd;
   margin: 0;
 }
+.botao_sair {
+  font-size: 16px;
+  padding: 12px 25px;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  color: #495057;
+  transition: background-color 0.6s ease;
+  font-size: 16px;
+  &:hover {
+    background-color: #ff3f34;
+    border: none;
+    color: white;
+    transition: background-color 0.6s ease;
+  }
+}

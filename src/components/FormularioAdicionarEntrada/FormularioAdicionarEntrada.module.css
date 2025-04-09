@@ -1,124 +1,115 @@
 .botao_modal {
-    width: 200px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    background-color: white;
-    color: #272e34;
-    border: #eceff4 solid 2px;
-    height: 40px;
-    border-radius: 15px;
-    cursor: pointer;
-    outline: none;
-    transition: background-color 0.6s ease;
-    font-size: 16px;
-    &:hover
-
-{
+  padding: 12px 25px;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  color: #495057;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.6s ease;
+  font-size: 16px;
+  &:hover {
     background-color: #006dcd;
     border: none;
     color: white;
     transition: background-color 0.6s ease;
-}
+  }
 
-& svg {
+  & svg {
     font-size: 18px;
-}
-
+  }
 }
 
 /* Container do formulário */
 .container_formulario {
-    width: 500px; /* Largura específica para o modal pequeno */
+  width: 500px; /* Largura específica para o modal pequeno */
 }
 
 .formulario {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .container_linha {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .container_campos_formulario {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    flex: 1;
-  }
-  
-  .container_campos_formulario label {
-    font-size: 0.9rem;
-    color: #495057;
-  }
-  
-  .container_campos_formulario input,
-  .container_campos_formulario select {
-    padding: 8px 12px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
-  
-  .container_campos_formulario textarea {
-    padding: 8px 12px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    font-size: 1rem;
-    min-height: 80px;
-    resize: vertical;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
 .container_linha {
-    display: flex;
-    align-items: center;
-    gap: 25px;
+  display: flex;
+  gap: 20px;
+}
+
+.container_campos_formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+
+.container_campos_formulario label {
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+.container_campos_formulario input,
+.container_campos_formulario select {
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.container_campos_formulario textarea {
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+  min-height: 80px;
+  resize: vertical;
+}
+
+.container_linha {
+  display: flex;
+  align-items: center;
+  gap: 25px;
 }
 
 .container_botoes {
-    display: flex;
-    align-items: center;
-    gap: 25px;
-    margin-top: 30px;
-    font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-top: 30px;
+  font-size: 14px;
 }
 
 .botao_cancelar {
-    font-size: 14px;
-    width: 50%;
-    padding: 10px 0;
-    border-radius: 8px;
-    border: none;
-    background-color: #ff4136;
-    color: white;
-    transition: background-color 0.2s ease-in-out;
-    &:hover
-
-{
+  font-size: 14px;
+  width: 50%;
+  padding: 10px 0;
+  border-radius: 8px;
+  border: none;
+  background-color: #ff4136;
+  color: white;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
     background-color: #ff0d00;
     transition: background-color 0.2s ease-in-out;
-}
-
+  }
 }
 
 .botao_adicionar {
-    width: 50%;
-    padding: 10px 0;
-    border-radius: 8px;
-    border: none;
-    background-color: #31c657;
-    color: white;
-    transition: background-color 0.2s ease-in-out;
-    font-size: 14px;
-    &:hover
-
-{
+  width: 50%;
+  padding: 10px 0;
+  border-radius: 8px;
+  border: none;
+  background-color: #31c657;
+  color: white;
+  transition: background-color 0.2s ease-in-out;
+  font-size: 14px;
+  &:hover {
     background-color: #00ba2f;
     transition: background-color 0.2s ease-in-out;
-}
+  }
 }

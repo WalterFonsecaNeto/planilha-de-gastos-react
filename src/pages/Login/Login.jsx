@@ -30,7 +30,6 @@ function Login() {
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) {
-        console.log(user.uid)
         localStorage.setItem("userId", user.uid);
 
         alert("Login realizado com sucesso!");
