@@ -19,7 +19,7 @@ function Cadastro() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    
+
     if (senha !== confirmarSenha) {
       alert("As senhas não coincidem!");
       return;
@@ -45,7 +45,7 @@ function Cadastro() {
         uid: user.uid,
         nome,
         email,
-        createdAt: new Date()
+        createdAt: new Date(),
       });
 
       alert("Usuário cadastrado com sucesso!");
@@ -72,55 +72,53 @@ function Cadastro() {
   };
 
   return (
-    <div className={style.container}>
-      <h2 className={style.title}>Cadastro</h2>
-      <form onSubmit={handleRegister} className={style.form}>
-        <input
-          type="text"
-          placeholder="Nome"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-          className={style.input}
-          required
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className={style.input}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Senha"
-          value={senha}
-          onChange={(e) => setSenha(e.target.value)}
-          className={style.input}
-          required
-          minLength="6"
-        />
-        <input
-          type="password"
-          placeholder="Confirmar Senha"
-          value={confirmarSenha}
-          onChange={(e) => setConfirmarSenha(e.target.value)}
-          className={style.input}
-          required
-          minLength="6"
-        />
-        <button 
-          type="submit" 
-          className={style.button}
-          disabled={loading}
-        >
-          {loading ? "Cadastrando..." : "Cadastrar"}
-        </button>
-      </form>
-      
-      <p className={style.login_link}>
-        Já tem uma conta? <a href="/login">Faça login</a>
-      </p>
+    <div className={style.container_total}>
+      <div className={style.container_cadastro}>
+        <h2 className={style.title}>Cadastro</h2>
+        <form onSubmit={handleRegister} className={style.form}>
+          <input
+            type="text"
+            placeholder="Nome"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            className={style.input}
+            required
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className={style.input}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Senha"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+            className={style.input}
+            required
+            minLength="6"
+          />
+          <input
+            type="password"
+            placeholder="Confirmar Senha"
+            value={confirmarSenha}
+            onChange={(e) => setConfirmarSenha(e.target.value)}
+            className={style.input}
+            required
+            minLength="6"
+          />
+          <button type="submit" className={style.button} disabled={loading}>
+            {loading ? "Cadastrando..." : "Cadastrar"}
+          </button>
+        </form>
+
+        <p className={style.login_link}>
+          Já tem uma conta? <a href="/login">Faça login</a>
+        </p>
+      </div>
     </div>
   );
 }

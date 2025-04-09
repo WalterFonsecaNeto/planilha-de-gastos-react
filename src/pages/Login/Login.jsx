@@ -43,29 +43,31 @@ function Login() {
   };
 
   return (
-    <div className={style.container}>
-      <h2 className={style.title}>Login</h2>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className={style.input}
-      />
-      <input
-        type="password"
-        placeholder="Senha"
-        value={senha}
-        onChange={(e) => setSenha(e.target.value)}
-        className={style.input}
-      />
-      <button onClick={handleLogin} className={style.button}>
-        Entrar
-      </button>
+    <div className={style.container_total}>
+      <div className={style.container_login}>
+        <h2 className={style.title}>Login</h2>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className={style.input}
+        />
+        <input
+          type="password"
+          placeholder="Senha"
+          value={senha}
+          onChange={(e) => setSenha(e.target.value)}
+          className={style.input}
+        />
+        <button onClick={handleLogin} className={style.button}>
+          Entrar
+        </button>
 
-      <p className={style.link}>
-        Ainda não possui uma conta? <a href="/cadastro">Crie uma agora!</a>
-      </p>
+        <p className={style.link}>
+          Ainda não possui uma conta? <a href="/cadastro">Crie uma agora!</a>
+        </p>
+      </div>
     </div>
   );
 }
