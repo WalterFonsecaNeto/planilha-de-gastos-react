@@ -119,7 +119,7 @@ function FormularioEditarUsuario({ usuarioSelecionado, carregarUsuarios }) {
                     <label htmlFor="tipo">Tipo</label>
                     <select name="tipo" value={dadosEdicao.tipo} onChange={pegarValores}>
                       <option value="">Selecione um tipo</option>
-                      <option value="admin">Admin</option>
+                      <option value="administrador">Administrador</option>
                       <option value="cliente">Cliente</option>
                     </select>
                   </div>
