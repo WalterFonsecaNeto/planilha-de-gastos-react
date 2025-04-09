@@ -6,7 +6,8 @@ import Cadastro from "../pages/Cadastro/Cadastro";
 import Login from "../pages/Login/Login";
 import ControleFinaceiro from "../pages/ControleFinaceiro/ControleFinaceiro";
 import Investimentos from "../pages/Investimentos/Investimentos";
-import Tarefas from "../pages/Tarefas/Tarefas";
+import Rotina from "../pages/Rotina/Rotina";
+import Agenda from "../pages/Agenda/Agenda";
 
 const Rotas = () => {
   return (
@@ -21,7 +22,8 @@ const Rotas = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/controle-finaceiro" element={<ControleFinaceiro />} />
           <Route path="/investimentos" element={<Investimentos />} />
-          <Route path="/tarefas" element={<Tarefas />} />
+          <Route path="/rotina" element={<Rotina />} />
+          <Route path="/agenda" element={<Agenda />} />
         </Route>
 
         {/* Redireciona qualquer outra rota para o login */}

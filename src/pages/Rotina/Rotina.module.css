@@ -1,0 +1,13 @@
+.pagina_conteudo {
+  width: 100%;
+  height: auto;
+  padding: 40px;
+  box-sizing: border-box;
+  overflow-y: hidden;
+}
+
+.titulo {
+  font-size: 1.6rem;
+  color: #006dcd;
+  margin: 0;
+}

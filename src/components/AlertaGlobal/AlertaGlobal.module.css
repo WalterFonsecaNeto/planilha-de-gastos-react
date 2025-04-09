@@ -1,0 +1,34 @@
+.alerta {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 9999; /* Valor alto para garantir prioridade */
+    max-width: 500px;
+    width: 100%;
+    margin: 0;
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0.9;
+    background-color: rgba(255, 255, 255, 0.85);
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .alerta .mensagem {
+    flex: 1; /* Para que o texto ocupe o espaço restante */
+  }
+  
+  .alerta button {
+    background: none;
+    border: none;
+    font-size: 26px;
+    cursor: pointer;
+    background-color: transparent !important;
+  
+    padding: 0;
+    margin-left: 10px;
+  }
+  

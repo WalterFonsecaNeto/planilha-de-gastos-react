@@ -10,14 +10,32 @@ import {
   signInWithEmailAndPassword,
 } from "../../db/firebaseConfig";
 import { useNavigate } from "react-router-dom";
+import AlertaGlobal from "../../components/AlertaGlobal/AlertaGlobal";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const [mostrarAlerta, setMostrarAlerta] = useState(false);
+  const [mensagemAlerta, setMensagemAlerta] = useState("");
+  const [tipoAlerta, setTipoAlerta] = useState("");
+  const [desabilitarBotao, setDesabilitarBotao] = useState(false);
+
+  function exibirAlerta(mensagem, tipo) {
+    setMensagemAlerta(mensagem);
+    setTipoAlerta(tipo);
+    setMostrarAlerta(true);
+
+    setTimeout(() => {
+      setMostrarAlerta(false);
+      setDesabilitarBotao(false);
+    }, 1000);
+  }
+
+  async function login() {
     try {
+      setDesabilitarBotao(true)
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
@@ -32,13 +50,15 @@ function Login() {
       if (!querySnapshot.empty) {
         localStorage.setItem("userId", user.uid);
 
-        alert("Login realizado com sucesso!");
-        navigate("/home");
+        exibirAlerta("Login realizado com sucesso!", "success");
+        setTimeout(() => {
+          navigate("/home");
+        }, 1000);
       } else {
-        alert("Usuário não encontrado no banco de dados.");
+        exibirAlerta("Usuário não encontrado no banco de dados.", "danger");
       }
     } catch (error) {
-      alert("Erro ao fazer login: " + error.message);
+      exibirAlerta(`Erro ao fazer login: ${error.message}`, "danger");
     }
   };
 
@@ -60,14 +80,25 @@ function Login() {
           onChange={(e) => setSenha(e.target.value)}
           className={style.input}
         />
-        <button onClick={handleLogin} className={style.button}>
-          Entrar
+        <button
+          onClick={login}
+          className={style.button}
+          disabled={desabilitarBotao}
+        >
+          {desabilitarBotao ? "Entrando..." : "Login"}
         </button>
 
         <p className={style.link}>
           Ainda não possui uma conta? <a href="/cadastro">Crie uma agora!</a>
         </p>
       </div>
+
+      <AlertaGlobal
+        tipo={tipoAlerta}
+        mensagem={mensagemAlerta}
+        visivel={mostrarAlerta}
+        aoFechar={() => setMostrarAlerta(false)}
+      />
     </div>
   );
 }
