@@ -14,6 +14,8 @@ function Login() {
   const [tipoAlerta, setTipoAlerta] = useState("");
   const [desabilitarBotao, setDesabilitarBotao] = useState(false);
 
+
+
   function exibirAlerta(mensagem, tipo) {
     setMensagemAlerta(mensagem);
     setTipoAlerta(tipo);
@@ -40,6 +42,7 @@ function Login() {
       if (dadosUsuario) {
         if (dadosUsuario.status === "ativo") {
           localStorage.setItem("userId", user.uid);
+          localStorage.setItem("tipoUsuario", dadosUsuario.tipo);
           exibirAlerta(`Seja bem-vindo(a), ${dadosUsuario.nome}!`, "success");
 
           setTimeout(() => {
