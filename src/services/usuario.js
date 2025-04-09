@@ -61,6 +61,12 @@ import {
     const outrosUsuarios = todosUsuarios.filter(usuario => usuario.id !== uidAtual);
     return outrosUsuarios;
   }
+
+  async function editarUsuarioAsync(uid, dadosAtualizados) {
+    const ref = doc(db, 'usuarios', uid);
+    await setDoc(ref, dadosAtualizados, { merge: true });
+  }
+  
   
   
   const usuario = {
@@ -70,6 +76,7 @@ import {
     buscarUsuarioPorEmailAsync,
     buscarUsuarioPorUidAsync,
     listarOutrosUsuariosAsync,
+    editarUsuarioAsync,
   };
   
   export default usuario;

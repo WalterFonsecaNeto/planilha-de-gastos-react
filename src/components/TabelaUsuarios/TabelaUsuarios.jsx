@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { VscChevronDown, VscChevronUp } from "react-icons/vsc";
 import styles from "./TabelaUsuarios.module.css";
+import FormularioEditarUsuario from "../FormularioEditarUsuario/FormularioEditarUsuario";
 
-function TabelaUsuarios({ usuarios }) {
+function TabelaUsuarios({ usuarios, carregarUsuarios }) {
     const [pesquisa, setPesquisa] = useState("");
     const [filtroStatus, setFiltroStatus] = useState("Todos");
     const [filtroTipo, setFiltroTipo] = useState("Todos");
@@ -105,6 +106,7 @@ function TabelaUsuarios({ usuarios }) {
                                     <td>{usuario.status}</td>
                                     <td>{usuario.tipo}</td>
                                     <td>
+                                        <FormularioEditarUsuario usuarioSelecionado={usuario} carregarUsuarios={carregarUsuarios}/>
 
                                     </td>
                                 </tr>
