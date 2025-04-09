@@ -7,7 +7,7 @@ import { db } from "../../db/firebaseConfig";
 import FormularioEditarEntrada from "../FormularioEditarEntrada/FormularioEditarEntrada";
 import FormularioConfirmarExclusao from "../FormularioConfirmarExclusao/FormularioConfirmarExclusao";
 
-function TabelaFinanceira({ entradas, userId }) {
+function TabelaFinanceira({ entradas, carregarEntradas }) {
   // Estados para controle da tabela
   const [paginaAtual, setPaginaAtual] = useState(1);
   const [ordenacao, setOrdenacao] = useState({
@@ -15,26 +15,9 @@ function TabelaFinanceira({ entradas, userId }) {
     direcao: "desc",
   });
   const [filtroTipo, setFiltroTipo] = useState("Todos");
-  const [pesquisaCategoria, setPesquisaCategoria] = useState("");
+  const [pesquisa, setPesquisa] = useState("");
 
-  // Estados para os modais
-  const [modalExclusaoAberto, setModalExclusaoAberto] = useState(false);
-  const [modalEdicaoAberto, setModalEdicaoAberto] = useState(false);
-  const [entradaSelecionada, setEntradaSelecionada] = useState({
-    id: "",
-    tipo: "",
-    valor: "",
-    data: "",
-    categoria: "",
-    descricao: "",
-  });
-  const [dadosEdicao, setDadosEdicao] = useState({
-    valor: "",
-    data: "",
-    categoria: "",
-    tipo: "",
-    descricao: "",
-  });
+
 
   // Estado para controle da linha expandida
   const [linhaExpandida, setLinhaExpandida] = useState(null);
@@ -70,10 +53,9 @@ function TabelaFinanceira({ entradas, userId }) {
   const entradasFiltradas = entradas.filter((entrada) => {
     if (filtroTipo !== "Todos" && entrada.tipo !== filtroTipo) return false;
     if (
-      pesquisaCategoria &&
-      !entrada.categoria
-        ?.toLowerCase()
-        .includes(pesquisaCategoria.toLowerCase())
+      pesquisa &&
+      !entrada.nome?.toLowerCase().includes(pesquisa.toLowerCase()) &&
+      !entrada.categoria?.toLowerCase().includes(pesquisa.toLowerCase())
     )
       return false;
     return true;
@@ -102,6 +84,11 @@ function TabelaFinanceira({ entradas, userId }) {
     }
     if (ordenacao.campo === "nome") {
       return ordenacao.direcao === "desc"
+        ? b.nome?.localeCompare(a.nome)
+        : a.nome?.localeCompare(b.nome);
+    }
+    if (ordenacao.campo === "categoria") {
+      return ordenacao.direcao === "desc"
         ? b.categoria?.localeCompare(a.categoria)
         : a.categoria?.localeCompare(b.categoria);
     }
@@ -111,10 +98,7 @@ function TabelaFinanceira({ entradas, userId }) {
   // Paginação
   const indiceUltimoItem = paginaAtual * itensPorPagina;
   const indicePrimeiroItem = indiceUltimoItem - itensPorPagina;
-  const itensAtuais = entradasOrdenadas.slice(
-    indicePrimeiroItem,
-    indiceUltimoItem
-  );
+  const itensAtuais = entradasOrdenadas.slice(indicePrimeiroItem, indiceUltimoItem);
   const totalPaginas = Math.ceil(entradasOrdenadas.length / itensPorPagina);
 
   const mudarPagina = (numeroPagina) => setPaginaAtual(numeroPagina);
@@ -124,71 +108,23 @@ function TabelaFinanceira({ entradas, userId }) {
   };
 
   // Função para expandir/recolher linha
-  const toggleExpandirLinha = (id) => {
+  const expandirLinha = (id) => {
     setLinhaExpandida(linhaExpandida === id ? null : id);
   };
 
-  // Funções para os modais
-  const abrirModalExclusao = (entrada) => {
-    setEntradaSelecionada(entrada);
-    setModalExclusaoAberto(true);
-  };
-
-  const abrirModalEdicao = (entrada) => {
-    setEntradaSelecionada(entrada);
-    setDadosEdicao({
-      valor: entrada.valor,
-      data: entrada.data,
-      categoria: entrada.categoria,
-      tipo: entrada.tipo,
-      descricao: entrada.descricao,
-    });
-    setModalEdicaoAberto(true);
-  };
-
-  const handleConfirmarExclusao = async () => {
-    try {
-      await deleteDoc(doc(db, "entradas", entradaSelecionada.id));
-      setModalExclusaoAberto(false);
-    } catch (error) {
-      console.error("Erro ao deletar entrada:", error);
-      alert("Não foi possível deletar a entrada");
-    }
-  };
-
-  const handleSalvarEdicao = async () => {
-    try {
-      await updateDoc(doc(db, "entradas", entradaSelecionada.id), {
-        ...dadosEdicao,
-        valor: Number(dadosEdicao.valor),
-      });
-      setModalEdicaoAberto(false);
-    } catch (error) {
-      console.error("Erro ao atualizar entrada:", error);
-      alert("Não foi possível atualizar a entrada");
-    }
-  };
-
-  const handleChangeEdicao = (e) => {
-    const { name, value } = e.target;
-    setDadosEdicao((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
 
   return (
     <>
-      {/* Filtro de categoria */}
-      <div className={style.filtro_categoria}>
+      {/* Filtro de pesquisa */}
+      <div className={style.filtro}>
         <input
           type="text"
-          value={pesquisaCategoria}
+          value={pesquisa}
           onChange={(e) => {
-            setPesquisaCategoria(e.target.value);
+            setPesquisa(e.target.value);
             setPaginaAtual(1);
           }}
-          placeholder="Pesquisar por categoria..."
+          placeholder="Pesquisar por nome ou categoria..."
         />
       </div>
 
@@ -198,11 +134,11 @@ function TabelaFinanceira({ entradas, userId }) {
           <table className={style.tabela}>
             <thead>
               <tr className={style.cabecalho_tabela}>
-                <th
-                  onClick={() => ordenarPorCampo("nome")}
-                  className={style.cabecalho_ordenavel}
-                >
+                <th onClick={() => ordenarPorCampo("nome")} className={style.cabecalho_ordenavel}>
                   Nome {getIconeOrdenacao("nome")}
+                </th>
+                <th onClick={() => ordenarPorCampo("categoria")} className={style.cabecalho_ordenavel}>
+                  Categoria {getIconeOrdenacao("categoria")}
                 </th>
                 <th className={style.cabecalho_filtro_tipo}>
                   <div className={style.dropdown_tipo}>
@@ -221,16 +157,10 @@ function TabelaFinanceira({ entradas, userId }) {
                     </select>
                   </div>
                 </th>
-                <th
-                  onClick={() => ordenarPorCampo("data")}
-                  className={style.cabecalho_ordenavel}
-                >
+                <th onClick={() => ordenarPorCampo("data")} className={style.cabecalho_ordenavel}>
                   Data {getIconeOrdenacao("data")}
                 </th>
-                <th
-                  onClick={() => ordenarPorCampo("valor")}
-                  className={style.cabecalho_ordenavel}
-                >
+                <th onClick={() => ordenarPorCampo("valor")} className={style.cabecalho_ordenavel}>
                   Valor {getIconeOrdenacao("valor")}
                 </th>
                 <th>Ações</th>
@@ -238,8 +168,10 @@ function TabelaFinanceira({ entradas, userId }) {
             </thead>
             <tbody>
               {itensAtuais.map((entrada) => (
+
                 <>
                   <tr key={entrada.id}>
+                    <td>{entrada.nome}</td>
                     <td>{entrada.categoria}</td>
                     <td>{entrada.tipo}</td>
                     <td>{formatarData(entrada.data)}</td>
@@ -257,20 +189,11 @@ function TabelaFinanceira({ entradas, userId }) {
                     </td>
                     <td>
                       <div className={style.container_acoes}>
+                        <FormularioEditarEntrada entradaSelecionada={entrada} carregarEntradas={carregarEntradas}/>
+
+                        <FormularioConfirmarExclusao entradaSelecionada={entrada} carregarEntradas={carregarEntradas}/>
                         <button
-                          onClick={() => abrirModalEdicao(entrada)}
-                          className={style.botao_editar}
-                        >
-                          <FiEdit />
-                        </button>
-                        <button
-                          onClick={() => abrirModalExclusao(entrada)}
-                          className={style.botao_excluir}
-                        >
-                          <FiTrash2 />
-                        </button>
-                        <button
-                          onClick={() => toggleExpandirLinha(entrada.id)}
+                          onClick={() => expandirLinha(entrada.id)}
                           className={style.botao_expandir}
                         >
                           {linhaExpandida === entrada.id ? (
@@ -285,7 +208,7 @@ function TabelaFinanceira({ entradas, userId }) {
                   {/* Linha expandida com a descrição */}
                   {linhaExpandida === entrada.id && (
                     <tr className={style.linha_descricao}>
-                      <td colSpan="5">
+                      <td colSpan="6">
                         <div className={style.conteudo_descricao}>
                           <strong>Descrição:</strong> {entrada.descricao}
                         </div>
@@ -338,23 +261,6 @@ function TabelaFinanceira({ entradas, userId }) {
           </div>
         )}
       </div>
-
-      {/* Modal de Confirmação de Exclusão */}
-      <FormularioConfirmarExclusao
-        aberto={modalExclusaoAberto}
-        setAberto={setModalExclusaoAberto}
-        entradaSelecionada={entradaSelecionada}
-        handleConfirmarExclusao={handleConfirmarExclusao}
-      />
-
-      {/* Modal de Edição */}
-      <FormularioEditarEntrada
-        aberto={modalEdicaoAberto}
-        setAberto={setModalEdicaoAberto}
-        dadosEdicao={dadosEdicao}
-        handleChangeEdicao={handleChangeEdicao}
-        handleSalvarEdicao={handleSalvarEdicao}
-      />
     </>
   );
 }

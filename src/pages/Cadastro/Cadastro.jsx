@@ -1,13 +1,7 @@
 import style from "./Cadastro.module.css";
 import React, { useState } from "react";
-import {
-  auth,
-  db,
-  collection,
-  addDoc,
-  createUserWithEmailAndPassword,
-} from "../../db/firebaseConfig";
 import { useNavigate } from "react-router-dom";
+import usuario from "../../services/usuario";
 
 function Cadastro() {
   const [nome, setNome] = useState("");
@@ -24,30 +18,10 @@ function Cadastro() {
       alert("As senhas não coincidem!");
       return;
     }
-
-    if (senha.length < 6) {
-      alert("A senha deve ter pelo menos 6 caracteres");
-      return;
-    }
-
     setLoading(true);
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        senha
-      );
-      const user = userCredential.user;
-
-      // Adiciona no Firestore na coleção "usuarios" (melhor usar plural para coleções)
-      await addDoc(collection(db, "usuarios"), {
-        uid: user.uid,
-        nome,
-        email,
-        createdAt: new Date(),
-      });
-
+      await usuario.criarUsuarioAsync(email, senha, nome);
       alert("Usuário cadastrado com sucesso!");
       navigate("/login");
     } catch (error) {
@@ -99,7 +73,6 @@ function Cadastro() {
             onChange={(e) => setSenha(e.target.value)}
             className={style.input}
             required
-            minLength="6"
           />
           <input
             type="password"
@@ -108,7 +81,6 @@ function Cadastro() {
             onChange={(e) => setConfirmarSenha(e.target.value)}
             className={style.input}
             required
-            minLength="6"
           />
           <button type="submit" className={style.button} disabled={loading}>
             {loading ? "Cadastrando..." : "Cadastrar"}

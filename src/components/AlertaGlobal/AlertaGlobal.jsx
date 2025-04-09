@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./AlertaGlobal.module.css";
+import style from "./AlertaGlobal.module.css";
 
 function AlertaGlobal({ tipo, mensagem, visivel, aoFechar }) {
   if (!visivel) return null;
@@ -11,40 +11,41 @@ function AlertaGlobal({ tipo, mensagem, visivel, aoFechar }) {
 
   switch (tipo) {
     case "success":
-      corFundo = "rgba(40, 167, 69, 0.8)";
+      corFundo = "rgba(72, 187, 120, 0.85)"; // verde mais suave
       corTexto = "#ffffff";
-      corBotao = "#ffffff";
+      corBotao = "#e6ffe6";
       break;
     case "danger":
-      corFundo = "rgba(255, 0, 25, 0.68)";
+      corFundo = "rgba(220, 53, 69, 0.85)"; // vermelho Bootstrap
       corTexto = "#ffffff";
-      corBotao = "#ffffff";
+      corBotao = "#ffe6e6";
       break;
     case "warning":
-      corFundo = "rgba(255, 208, 69, 0.54)";
-      corTexto = "#ffffff";
-      corBotao = "#ffffff";
+      corFundo = "rgba(255, 193, 7, 0.85)"; // amarelo Bootstrap
+      corTexto = "#212529"; // texto escuro no amarelo
+      corBotao = "#212529";
       break;
     case "info":
-      corFundo = "rgba(23, 163, 184, 0.64)";
+      corFundo = "rgba(23, 162, 184, 0.85)"; // azul claro Bootstrap
       corTexto = "#ffffff";
-      corBotao = "#ffffff";
+      corBotao = "#e6faff";
       break;
     default:
-      corFundo = "rgba(248, 249, 250, 0.8)";
-      corTexto = "#000000";
-      corBotao = "#000000";
+      corFundo = "rgba(248, 249, 250, 0.95)"; // cinza claro
+      corTexto = "#212529"; // preto suave
+      corBotao = "#212529";
       break;
   }
+  
 
   return (
     <div
-      className={styles.alerta}
+      className={style.alerta}
       style={{ backgroundColor: corFundo, color: corTexto }}
     >
-      <span>{mensagem}</span>
+      <span className={style.mensagem}>{mensagem}</span>
       <button
-        className={styles.fechar}
+        className={style.fechar}
         onClick={aoFechar}
         style={{ color: corBotao }}
       >

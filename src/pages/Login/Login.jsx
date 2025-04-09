@@ -1,14 +1,6 @@
 import style from "./Login.module.css";
 import React, { useState } from "react";
-import {
-  auth,
-  db,
-  collection,
-  getDocs,
-  query,
-  where,
-  signInWithEmailAndPassword,
-} from "../../db/firebaseConfig";
+import usuario from "../../services/usuario";
 import { useNavigate } from "react-router-dom";
 import AlertaGlobal from "../../components/AlertaGlobal/AlertaGlobal";
 
@@ -30,37 +22,39 @@ function Login() {
     setTimeout(() => {
       setMostrarAlerta(false);
       setDesabilitarBotao(false);
-    }, 1000);
+    }, 1500);
   }
 
   async function login() {
     try {
-      setDesabilitarBotao(true)
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        senha
-      );
-      const user = userCredential.user;
+      setDesabilitarBotao(true);
 
-      // Verifica se o usuário existe na coleção "usuario"
-      const q = query(collection(db, "usuarios"), where("uid", "==", user.uid));
-      const querySnapshot = await getDocs(q);
+      const user = await usuario.logarUsuarioAsync(email, senha);
+      const dadosUsuario = await usuario.buscarUsuarioPorUidAsync(user.uid);
 
-      if (!querySnapshot.empty) {
-        localStorage.setItem("userId", user.uid);
+      if (dadosUsuario) {
+        if (dadosUsuario.status === "ativo") {
+          localStorage.setItem("userId", user.uid);
+          exibirAlerta(`Seja bem-vindo(a), ${dadosUsuario.nome}!`, "success");
 
-        exibirAlerta("Login realizado com sucesso!", "success");
-        setTimeout(() => {
-          navigate("/home");
-        }, 1000);
+          setTimeout(() => {
+            navigate("/home");
+          }, 1500);
+        } else if (dadosUsuario.status === "bloqueado") {
+          exibirAlerta("Seu acesso ainda não foi liberado pelo administrador.", "warning");
+        } else if (dadosUsuario.status === "inativo") {
+          exibirAlerta("Usuário inativo. Entre em contato com o administrador.", "warning");
+        } else {
+          exibirAlerta("Status do usuário inválido.", "danger");
+        }
       } else {
         exibirAlerta("Usuário não encontrado no banco de dados.", "danger");
       }
     } catch (error) {
       exibirAlerta(`Erro ao fazer login: ${error.message}`, "danger");
     }
-  };
+  }
+
 
   return (
     <div className={style.container_total}>

@@ -2,18 +2,34 @@ import { useState, useEffect } from "react";
 import style from "./FormularioAdicionarEntrada.module.css";
 import ModalGlobal from "../ModalGlobal/ModalGlobal";
 import { MdOutlineAddCircleOutline } from "react-icons/md";
-import { addDoc, collection } from "../../db/firebaseConfig";
-import { db } from "../../db/firebaseConfig"; // Importe o db explicitamente
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../db/firebaseConfig";
+import AlertaGlobal from "../AlertaGlobal/AlertaGlobal";
 
-function FormularioAdicionarEntrada({ userId }) {
+function FormularioAdicionarEntrada({ userId, carregarEntradas }) {
   const [aberto, setAberto] = useState(false);
   const [entradaFormulario, setEntradaFormulario] = useState({
+    nome: "",
     valor: null,
     data: "",
     categoria: "",
     tipo: "",
     descricao: "",
   });
+
+  const [mostrarAlerta, setMostrarAlerta] = useState(false);
+  const [mensagemAlerta, setMensagemAlerta] = useState("");
+  const [tipoAlerta, setTipoAlerta] = useState("");
+
+  function exibirAlerta(mensagem, tipo) {
+    setMensagemAlerta(mensagem);
+    setTipoAlerta(tipo);
+    setMostrarAlerta(true);
+
+    setTimeout(() => {
+      setMostrarAlerta(false);
+    }, 1500);
+  }
 
   function SetValoreEntrada(event) {
     const { name, value } = event.target;
@@ -24,38 +40,35 @@ function FormularioAdicionarEntrada({ userId }) {
   }
 
   async function SalvarEntrada() {
-    if (
-      !entradaFormulario.valor ||
-      !entradaFormulario.data ||
-      !entradaFormulario.categoria ||
-      !entradaFormulario.tipo ||
-      !entradaFormulario.descricao
-    ) {
-      alert("Preencha todos os campos!");
+    const { nome, valor, data, categoria, tipo, descricao } = entradaFormulario;
+
+    if (!nome || !valor || !data || !categoria || !tipo || !descricao) {
+      exibirAlerta("Preencha todos os campos!", "danger");
       return;
     }
 
     try {
       await addDoc(collection(db, "entradas"), {
         ...entradaFormulario,
-        valor: Number(entradaFormulario.valor),
+        valor: Number(valor),
         userId,
         createdAt: new Date(),
       });
 
-      // Fecha o modal e limpa o formulário
+      exibirAlerta("Entrada adicionada com sucesso!", "success");
       setAberto(false);
+      carregarEntradas();
     } catch (error) {
       console.error("Erro ao salvar entrada:", error);
-      alert("Ocorreu um erro ao salvar a entrada");
+      exibirAlerta("Ocorreu um erro ao salvar a entrada", "danger");
     }
   }
 
-  // Limpa os campos quando o modal é fechado
   useEffect(() => {
     if (!aberto) {
       setEntradaFormulario({
-        valor: 0,
+        nome: "",
+        valor: null,
         data: "",
         categoria: "",
         tipo: "",
@@ -70,15 +83,30 @@ function FormularioAdicionarEntrada({ userId }) {
         <MdOutlineAddCircleOutline />
         Adicionar Entrada
       </button>
+
+      <AlertaGlobal
+        tipo={tipoAlerta}
+        mensagem={mensagemAlerta}
+        visivel={mostrarAlerta}
+        aoFechar={() => setMostrarAlerta(false)}
+      />
+
       {aberto && (
         <div className={style.container_total_modal}>
-          <ModalGlobal
-            aberto={aberto}
-            setAberto={setAberto}
-            titulo="Adicionar Entrada"
-          >
+          <ModalGlobal aberto={aberto} setAberto={setAberto} titulo="Adicionar Entrada">
             <div className={style.container_formulario}>
               <form className={style.formulario}>
+                <div className={style.container_campos_formulario}>
+                  <label htmlFor="nome">Nome</label>
+                  <input
+                    type="text"
+                    placeholder="Nome da entrada"
+                    name="nome"
+                    value={entradaFormulario.nome}
+                    onChange={SetValoreEntrada}
+                  />
+                </div>
+
                 <div className={style.container_linha}>
                   <div className={style.container_campos_formulario}>
                     <label htmlFor="valor">Valor</label>
@@ -94,7 +122,6 @@ function FormularioAdicionarEntrada({ userId }) {
                     <label htmlFor="data">Data</label>
                     <input
                       type="date"
-                      placeholder="Data"
                       name="data"
                       value={entradaFormulario.data}
                       onChange={SetValoreEntrada}

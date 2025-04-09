@@ -1,3 +1,11 @@
+.botao_modal {
+  background: none;
+  border: none;
+  color: #dc3545;
+  cursor: pointer;
+  font-size: 1.2rem;
+  }
+
 .container_conteudo {
   width: 300px;
   padding: 20px;

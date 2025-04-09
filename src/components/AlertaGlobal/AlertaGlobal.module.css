@@ -20,6 +20,9 @@
   .alerta .mensagem {
     flex: 1; /* Para que o texto ocupe o espaço restante */
   }
+  .mensagem{
+    font-size: 1.1rem;
+  }
   
   .alerta button {
     background: none;
