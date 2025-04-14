@@ -63,6 +63,9 @@ function ControleFinaceiro() {
       >
         <div className={style.pagina_conteudo}>
           <div className={style.container_titulo_acoes}>
+
+
+            
             <h2 className={style.titulo}>Controle Financeiro</h2>
             <div className={style.botoes_acao}>
               <FormularioAdicionarEntrada userId={userId} carregarEntradas={carregarEntradas} />

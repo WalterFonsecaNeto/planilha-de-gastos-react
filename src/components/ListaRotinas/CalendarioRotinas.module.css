@@ -1,0 +1,64 @@
+.calendario_container {
+    padding: 20px;
+    background: #fff;
+  }
+  
+  .controles_navegacao {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .botao_navegacao {
+    background-color: #2563eb;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  
+  .botao_navegacao:hover {
+    background-color: #1d4ed8;
+  }
+  
+  .custom_header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 50px; /* aumenta a altura da célula */
+  }
+  
+  .header_dia {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+  
+  .header_data {
+    font-size: 12px;
+    color: #666;
+  }
+  
+  .dia_hoje {
+    background-color: #e0f2fe;
+    border-bottom: 2px solid #1d4ed8;
+    border-radius: 4px;
+  }
+  
+
+  .horario_header_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 4px;
+  }
+  
+  .horario_header_text {
+    font-weight: bold;
+    font-size: 12px;
+  }
+  
