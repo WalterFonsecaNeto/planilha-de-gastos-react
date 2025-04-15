@@ -3,13 +3,13 @@ import { getFirestore, collection, addDoc, getDocs, getDoc, doc, setDoc, updateD
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCAp2UzvVrcdArwT3Wosh9b209XCAMGPqA",
-  authDomain: "projetos-pessoais-3eb8f.firebaseapp.com",
-  projectId: "projetos-pessoais-3eb8f",
-  storageBucket: "projetos-pessoais-3eb8f.appspot.com",
-  messagingSenderId: "778695472327",
-  appId: "1:778695472327:web:80b0cea28b4ed725bdfae2",
-  measurementId: "G-EY9JFHQV3G"
+  apiKey: "AIzaSyAmQ1FGyixowsu1_1f73wDAlBbFTswf6Oc",
+  authDomain: "meu-site-dashhub.firebaseapp.com",
+  projectId: "meu-site-dashhub",
+  storageBucket: "meu-site-dashhub.firebasestorage.app",
+  messagingSenderId: "331881254986",
+  appId: "1:331881254986:web:be7523f6a36448e54b56b3",
+  measurementId: "G-FFSDH58N48"
 };
 
 // Inicializa Firebase

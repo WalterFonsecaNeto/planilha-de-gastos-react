@@ -41,40 +41,43 @@ function CalendarioRotinas({ rotinas }) {
     if (action === 'TODAY') setCurrentDate(new Date());
   };
 
-  const eventos = rotinas.map(rotina => {
+  const eventos = rotinas.flatMap(rotina => {
     try {
-      if (rotina.tipo === 'fixa') {
-        return rotina.diaSemana?.map(dia => {
-          const diasMap = {
-            'Segunda': 1, 'Terça': 2, 'Quarta': 3,
-            'Quinta': 4, 'Sexta': 5, 'Sábado': 6, 'Domingo': 0
-          };
+      if (rotina.tipo === 'fixa' && Array.isArray(rotina.diaSemana)) {
+        const diasMap = {
+          'Domingo': 0, 'Segunda': 1, 'Terça': 2,
+          'Quarta': 3, 'Quinta': 4, 'Sexta': 5, 'Sábado': 6,
+        };
 
-          if (!(dia in diasMap)) return null;
+        const startSemana = startOfWeek(currentDate, { locale: ptBR, weekStartsOn: 1 });
 
-          const date = new Date(currentDate);
+        return rotina.diaSemana.map(dia => {
           const diaAlvo = diasMap[dia];
-          const diff = (diaAlvo - date.getDay() + 7) % 7;
-          date.setDate(date.getDate() + diff);
+          if (diaAlvo === undefined) return null;
+
+          const dataBase = new Date(startSemana);
+          const dataEvento = new Date(dataBase.setDate(startSemana.getDate() + (diaAlvo === 0 ? 6 : diaAlvo - 1)));
 
           const [horaInicio, minutoInicio] = (rotina.horaInicio || '00:00').split(':').map(Number);
           const [horaFim, minutoFim] = (rotina.horaFim || '23:59').split(':').map(Number);
 
-          date.setHours(horaInicio, minutoInicio, 0);
-          const endDate = new Date(date);
-          endDate.setHours(horaFim, minutoFim, 0);
+          const start = new Date(dataEvento);
+          start.setHours(horaInicio, minutoInicio, 0);
+
+          const end = new Date(dataEvento);
+          end.setHours(horaFim, minutoFim, 0);
 
           return {
             title: rotina.nome || 'Sem nome',
-            start: date,
-            end: endDate,
+            start,
+            end,
             allDay: false,
             resource: rotina,
           };
         }).filter(Boolean);
-      } else {
-        if (!rotina.dataEspecifica) return null;
+      }
 
+      if (rotina.tipo !== 'fixa' && rotina.dataEspecifica) {
         const [ano, mes, dia] = rotina.dataEspecifica.split('-').map(Number);
         const [horaInicio, minutoInicio] = (rotina.horaInicio || '00:00').split(':').map(Number);
         const [horaFim, minutoFim] = (rotina.horaFim || '23:59').split(':').map(Number);
@@ -82,19 +85,22 @@ function CalendarioRotinas({ rotinas }) {
         const start = new Date(ano, mes - 1, dia, horaInicio, minutoInicio);
         const end = new Date(ano, mes - 1, dia, horaFim, minutoFim);
 
-        return {
+        return [{
           title: rotina.nome || 'Sem nome',
           start,
           end,
           allDay: false,
           resource: rotina,
-        };
+        }];
       }
+
+      return [];
     } catch (error) {
       console.error('Erro ao processar rotina:', error);
-      return null;
+      return [];
     }
-  }).flat().filter(Boolean);
+  });
+
 
   const eventStyleGetter = (event) => ({
     style: {
